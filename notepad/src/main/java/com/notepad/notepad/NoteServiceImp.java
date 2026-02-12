@@ -23,13 +23,20 @@ public class NoteServiceImp implements NoteService {
     }
 
     @Override
-    public void delete(int id) {
-        noteRepository.deleteById(id);
+    public void delete(int id){
+        try {
+            noteRepository.deleteById(id);
+        }catch (Exception e){
+            throw new NoteException("Note could not be deleted.");
+        }
     }
 
     @Override
     public ResponseNote findById(int id) {
         Note  note = noteRepository.findById(id).orElse(null);
+        if(note == null){
+            throw new NoteException("Note could not be found.");
+        }
         return new ResponseNote(note.getTitle(),note.getContent(), note.getDateCreated());
     }
 
@@ -41,6 +48,9 @@ public class NoteServiceImp implements NoteService {
     @Override
     public void updateNote(int id, RequestNote responseNote) {
         Note note = noteRepository.findById(id).orElse(null);
+        if(note == null){
+            throw new NoteException("Note could not be found.");
+        }
         note.setTitle(responseNote.title());
         note.setContent(responseNote.content());
     }
