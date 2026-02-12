@@ -1,4 +1,4 @@
-package com.notepad.notepad;
+package com.notepad.notepad.note;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;

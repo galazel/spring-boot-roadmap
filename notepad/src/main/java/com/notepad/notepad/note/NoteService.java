@@ -1,4 +1,4 @@
-package com.notepad.notepad;
+package com.notepad.notepad.note;
 
 import java.util.List;
 

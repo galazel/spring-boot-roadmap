@@ -1,4 +1,4 @@
-package com.notepad.notepad;
+package com.notepad.notepad.note;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ public class GlobalException {
 
     @ExceptionHandler(NoteException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleException(NoteException ex) {
-
+    public ResponseEntity<ResponseNote> handleException(NoteException ex) {
+        return new ResponseEntity(new ResponseNote(null,null,null), HttpStatus.BAD_REQUEST);
     }
 }
