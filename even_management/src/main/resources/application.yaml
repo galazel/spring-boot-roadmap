@@ -2,4 +2,4 @@ spring:
   application:
     name: even_management
   profiles:
-    activate: dev
+    active: dev

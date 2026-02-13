@@ -1,15 +1,24 @@
 package com.event_management.even_management.event;
 
-import com.event_management.even_management.user.Client;
-import com.event_management.even_management.user.Organizer;
+import com.event_management.even_management.user.client.Client;
+import com.event_management.even_management.user.organizer.Organizer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "events")
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Event {
 
     @Id
