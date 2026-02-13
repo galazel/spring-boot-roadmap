@@ -26,7 +26,7 @@ public class GlobalException {
     @ExceptionHandler(AccountException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseUser> handleException(AccountException ex) {
-        return new ResponseEntity(new ResponseUser(null,null,null, null, ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new ResponseUser(null,null,null, null, ex.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -58,7 +58,7 @@ public class UserServiceImp implements UserService{
         try
         {
             User user = userRepository.findById(id).get();
-            return new ResponseUser(user.getUsername(), user.getEmail(), user.getFirstname(), user.getLastname(),null);
+            return new ResponseUser(user.getUsername(), user.getEmail(), user.getFirstname(), user.getLastname(),null, user.getNotes());
         }catch (Exception e){
             throw new AccountException("Find User with id " + id + " failed");
         }
@@ -67,7 +67,7 @@ public class UserServiceImp implements UserService{
     @Override
     public List<ResponseUser> getAll() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> new ResponseUser(user.getUsername(),user.getEmail(),user.getFirstname(),user.getLastname(),null)).collect(Collectors.toUnmodifiableList());
+        return users.stream().map(user -> new ResponseUser(user.getUsername(),user.getEmail(),user.getFirstname(),user.getLastname(),null, user.getNotes())).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

@@ -15,7 +15,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
     @PostMapping("save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@Valid @RequestBody RequestUser user){
@@ -24,7 +23,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("delete/{int}")
     public void delete(@PathVariable  int id){
-
         userService.delete(id);
     }
     @ResponseStatus(HttpStatus.OK)
