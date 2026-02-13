@@ -1,5 +1,7 @@
 package com.notepad.notepad.note;
 
+import com.notepad.notepad.account.User;
+import com.notepad.notepad.account.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,18 +10,28 @@ import java.util.List;
 public class NoteServiceImp implements NoteService {
 
     private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
 
-    public NoteServiceImp(NoteRepository noteRepository) {
+    public NoteServiceImp(NoteRepository noteRepository,  UserRepository userRepository) {
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void save(RequestNote note) {
-        noteRepository.save(Note.builder()
-                .title(note.title())
-                .content(note.content())
-                .dateCreated(note.dateCreated())
-                .build());
+        try
+        {
+            User user = userRepository.findById(note.userId()).get();
+            noteRepository.save(Note.builder()
+                    .title(note.title())
+                    .content(note.content())
+                    .dateCreated(note.dateCreated())
+                    .user(user)
+                    .build());
+        } catch (Exception e) {
+            throw new NoteException("User not found");
+        }
+
     }
 
     @Override
@@ -37,7 +49,7 @@ public class NoteServiceImp implements NoteService {
         if(note == null){
             throw new NoteException("Note could not be found.");
         }
-        return new ResponseNote(note.getTitle(),note.getContent(), note.getDateCreated());
+        return new ResponseNote(note.getTitle(),note.getContent(), note.getDateCreated(), null,note.getUser());
     }
 
     @Override
@@ -53,6 +65,7 @@ public class NoteServiceImp implements NoteService {
         }
         note.setTitle(responseNote.title());
         note.setContent(responseNote.content());
+        noteRepository.save(note);
     }
 
 
