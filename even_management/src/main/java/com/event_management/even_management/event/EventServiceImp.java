@@ -27,7 +27,6 @@ public class EventServiceImp implements EventService {
     }
     @Override
     public void addEvent(EventRequest requestUser) {
-
         Event event = Event.builder()
                 .title(requestUser.title())
                 .description(requestUser.description())
@@ -53,12 +52,12 @@ public class EventServiceImp implements EventService {
     }
 
     @Override
-    public List<EventResponse> getAllEvents() {
-        List<EventResponse> eventResponses = new ArrayList<>();
-        List<ClientResponse> clientResponses = clientRepository.findAll().stream().map(client -> ).collect(Collectors.toList());
-        OrganizerResponse organizer =
-//        return eventRepository.findAll().stream().map(event -> new EventResponse(event.getTitle(), event.getDescription(), event.getEventDateTime(), event.getLocation(), event.getCapacity(), event.getEventType(), new OrganizerResponse(new UserResponse(event.getOrganizer().getUser().getLastname(),event.getOrganizer().getUser().getFirstname(),event.getOrganizer().getUser().getEmail(), event.getOrganizer().getUser().getContact(), event.getOrganizer().getUser().getUsername(), event.getOrganizer().getUser().getRole() == User.Role.CLIENT ? User.Role.CLIENT : User.Role.ORGANIZER , null), null), event.getClients())).collect(Collectors.toUnmodifiableList());
-
+    public List<Event> getAllEvents() {
+        List<Event> events = eventRepository.getEventWithClients(1);
+        List<OrganizerResponses> organizer =
+        return events.stream().map(event ->
+                new EventResponse(event.getTitle(), event.getDescription(), event.getEventDateTime(), event.getLocation(), event.getCapacity(), event.getEventType(), new OrganizerResponse(new UserResponse(event.getOrganizer().getUser().getLastname(),event.getOrganizer().getUser().getFirstname(), event.getOrganizer().getUser().getEmail(),event.getOrganizer().getUser().getContact(),event.getOrganizer().getUser().getUsername(), event.getOrganizer().getUser().getRole(),null)),event.getClients())
+                ).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

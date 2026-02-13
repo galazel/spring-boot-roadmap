@@ -14,7 +14,7 @@ public class EventController {
         this.eventService = eventService;
     }
     @GetMapping("get-all")
-    public List<EventResponse> getAllEvents()
+    public List<Event> getAllEvents()
     {
         return eventService.getAllEvents();
     }
