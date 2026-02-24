@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ai_security_playground
+  security:
+    user:
+      name: testuser
+      password: testpass
+      roles: USER
+
+logging:
+  level:
+    org.springframework.security: TRACE
+
