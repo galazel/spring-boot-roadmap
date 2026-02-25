@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: password_hasher_cli
