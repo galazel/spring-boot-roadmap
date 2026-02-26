@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: pure-client
+
+  security:
+    oauth2:
+      client:
+        registration:
+          oauth2-client:
+            client-id: oauth2-client
+            client-secret: ${CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid, profile, email
+        provider:
+          oauth2-client:
+            token-uri: "http://127.0.0.1:8080/realms/oauth2-demo/protocol/openid-connect/token"
+
+service2:
+  url: "http://localhost:8081"
+
+server:
+  port: 8082
