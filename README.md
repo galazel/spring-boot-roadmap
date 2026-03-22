@@ -1,1 +1,1 @@
-This repository consists of spring boot projects for my development program :)
+This repository consist of spring boot projects for my development program :)
