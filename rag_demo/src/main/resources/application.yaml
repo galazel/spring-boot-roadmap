@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: sample
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
+langchain4j:
+  open-ai:
+    api-key: ${GITHUB_TOKEN}
+    base-url: https://models.inference.ai.azure.com
+    chat-model:
+      model-name: gpt-4o-mini
+    embedding-model:
+      model-name: text-embedding-3-small
+
+server:
+  port: 8081
+
+logging:
+  file:
+    name: logs/app.log
+  level:
+    root: INFO
