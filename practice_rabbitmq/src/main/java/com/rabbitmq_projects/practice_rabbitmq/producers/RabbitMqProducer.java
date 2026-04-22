@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RabbitMqProducer {
     private final RabbitTemplate rabbitTemplate;
-    private String exchangeName;
-    private String routingKey;
+    private String exchangeName = "springboot-exchange";
+    private String routingKey = "springboot-routingkey";
 
     public void sendMessage(String message) {
         log.info("Sending message: {}", message);

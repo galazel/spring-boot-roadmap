@@ -1,12 +1,11 @@
 package com.rabbitmq_projects.practice_rabbitmq.configs;
 
 
-import com.rabbitmq.client.ConnectionFactory;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,21 +14,39 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfig {
 
     @Bean
-    public Queue queue() {
+    public Queue springbootQueue() {
         return new Queue("springboot-queue");
     }
     @Bean
-    public TopicExchange exchange() {
+    public TopicExchange springbootExchange() {
         return new TopicExchange("springboot-exchange");
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("springboot-routingkey");
+    public Binding binding() {
+        return BindingBuilder.bind(springbootQueue()).to(springbootExchange()).with("springboot-routingkey");
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate() {
-        return new RabbitTemplate();
+    public Queue jsonQueue() {
+        return new Queue("springboot-json-queue");
     }
+
+    @Bean
+    public Binding jsonBinding() {
+        return BindingBuilder.bind(jsonQueue()).to(springbootExchange()).with("springboot_json_routingkey");
+    }
+
+    @Bean
+    public MessageConverter messageConverter() {
+        return new JacksonJsonMessageConverter();
+    }
+
+    @Bean
+    public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(messageConverter());
+        return rabbitTemplate;
+    }
+
 }
